@@ -2,7 +2,7 @@
 const { users, hash } = require("./users");
 
 function login(name, password) {
-  return users.get(name) === hash(password);
+  return users.get(name)?.hash === hash(password);
 }
 
 module.exports = { login };
