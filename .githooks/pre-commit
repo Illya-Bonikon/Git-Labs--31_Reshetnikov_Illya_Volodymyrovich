@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Перед комітом перевіряє ESLint-ом лише ті .js файли, які додано в індекс.
+# Якщо є помилки стилю, коміт скасовується. Обійти перевірку можна ключем --no-verify.
+files=$(git diff --cached --name-only --diff-filter=ACM -- '*.js' ':!vendor/*')
+[ -z "$files" ] && exit 0
+
+echo "pre-commit: ESLint перевіряє $(echo "$files" | wc -l) файл(и)"
+if ! npx --no-install eslint $files; then
+    echo "pre-commit: коміт скасовано, виправте помилки стилю (npm run lint)."
+    exit 1
+fi
