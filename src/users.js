@@ -7,8 +7,8 @@ function hash(password) {
   return crypto.createHash("sha256").update(password).digest("hex");
 }
 
-function add(login, password) {
-  users.set(login, hash(password));
+function add(login, password, role = "user") {
+  users.set(login, { hash: hash(password), role });
 }
 
 module.exports = { users, hash, add };
